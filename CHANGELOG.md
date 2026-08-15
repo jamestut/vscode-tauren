@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- Copy command action on bash tool output in the sidebar.
+- Open and Copy path actions on edit and write tool output in the sidebar.
+
 ## [1.10.0] - 2026-07-19
 
 ### Added
