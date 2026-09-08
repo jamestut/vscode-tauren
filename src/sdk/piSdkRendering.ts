@@ -73,7 +73,7 @@ export class PiSdkRenderer {
     }
 
     const render = (expanded: boolean): string | undefined => {
-      const component = safeRender(() => renderer(message as unknown as MessageRendererInput, { expanded }, taurenTheme as Theme));
+      const component = safeRender(() => renderer(message as unknown as MessageRendererInput, { expanded, outputPad: 0 }, taurenTheme as Theme));
       return component ? renderComponentText(component) : undefined;
     };
     const collapsed = render(false);
