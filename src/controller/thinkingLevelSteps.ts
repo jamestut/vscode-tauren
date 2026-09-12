@@ -14,11 +14,8 @@ export function getSteppedThinkingLevel(
     return undefined;
   }
 
-  const nextIndex = direction === 'raise' ? currentIndex + 1 : currentIndex - 1;
-
-  if (nextIndex < 0 || nextIndex >= thinkingLevelOrder.length) {
-    return undefined;
-  }
+  const delta = direction === 'raise' ? 1 : -1;
+  const nextIndex = (currentIndex + delta + thinkingLevelOrder.length) % thinkingLevelOrder.length;
 
   return thinkingLevelOrder[nextIndex];
 }
