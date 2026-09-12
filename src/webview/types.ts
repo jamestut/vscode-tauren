@@ -92,6 +92,7 @@ export type WebviewState = {
   modelId: string;
   modelReasoning: boolean;
   thinkingLevel: string;
+  thinkingLevels: string[];
   modelOptions: ModelOption[];
   contextUsageLabel: string;
   contextUsageTitle: string;

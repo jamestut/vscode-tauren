@@ -104,6 +104,7 @@ export type PiImageContent = {
 export type PiSessionState = {
   model?: PiModel | null;
   thinkingLevel?: string;
+  thinkingLevels?: string[];
   isStreaming?: boolean;
   isCompacting?: boolean;
   steeringMode?: string;

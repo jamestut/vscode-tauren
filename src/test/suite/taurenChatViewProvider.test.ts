@@ -103,7 +103,8 @@ suite('TaurenChatViewProvider', () => {
         provider: 'openai',
         id: 'live-model',
         reasoning: true,
-        thinkingLevel: 'medium'
+        thinkingLevel: 'medium',
+        thinkingLevels: []
       },
       modelOptions: [
         { provider: 'openai', id: 'live-model', name: 'Live Model', reasoning: true }
