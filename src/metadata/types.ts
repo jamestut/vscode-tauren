@@ -7,6 +7,7 @@ export type TaurenChatModelMeta = {
   id: string;
   reasoning: boolean;
   thinkingLevel: string;
+  thinkingLevels: string[];
 };
 
 export type TaurenChatContextUsage = {
@@ -31,6 +32,7 @@ export type SessionMetadataWebviewState = {
     id: string;
     reasoning: boolean;
     thinkingLevel: string;
+    thinkingLevels: string[];
     options: WebviewModelOption[];
   };
   contextUsage: TaurenChatContextUsage;

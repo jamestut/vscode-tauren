@@ -363,6 +363,7 @@ export class SessionMetadataState {
   private modelId = '';
   private modelReasoning = false;
   private thinkingLevel = '';
+  private thinkingLevels: string[] = [];
   private modelOptions: WebviewModelOption[] = [];
   private contextUsageLabel = '';
   private contextUsageTitle = '';
@@ -388,6 +389,7 @@ export class SessionMetadataState {
         id: this.modelId,
         reasoning: this.modelReasoning,
         thinkingLevel: this.thinkingLevel,
+        thinkingLevels: [...this.thinkingLevels],
         options: this.modelOptions
       },
       contextUsage: {
@@ -425,8 +427,8 @@ export class SessionMetadataState {
     return false;
   }
 
-  public applyModelSelection(model: AgentModel, thinkingLevel: string): boolean {
-    return this.applyModelMeta(getModelMeta({ model, thinkingLevel }));
+  public applyModelSelection(model: AgentModel, thinkingLevel: string, thinkingLevels: string[] = []): boolean {
+    return this.applyModelMeta({ ...getModelMeta({ model, thinkingLevel }), thinkingLevels: [...thinkingLevels] });
   }
 
   public applySessionStats(stats: AgentSessionStats): boolean {
@@ -490,6 +492,7 @@ export class SessionMetadataState {
       && modelMeta.id === this.modelId
       && modelMeta.reasoning === this.modelReasoning
       && modelMeta.thinkingLevel === this.thinkingLevel
+      && areStringArraysEqual(modelMeta.thinkingLevels, this.thinkingLevels)
     ) {
       return false;
     }
@@ -507,6 +510,7 @@ export class SessionMetadataState {
     this.modelId = modelMeta.id;
     this.modelReasoning = modelMeta.reasoning;
     this.thinkingLevel = modelMeta.thinkingLevel;
+    this.thinkingLevels = [...modelMeta.thinkingLevels];
   }
 
   private applyPiSettings(settings: PiRuntimeSettingsMeta): boolean {
@@ -603,7 +607,8 @@ export class SessionMetadataState {
           provider: this.modelProvider,
           id: this.modelId,
           reasoning: this.modelReasoning,
-          thinkingLevel: this.thinkingLevel
+          thinkingLevel: this.thinkingLevel,
+          thinkingLevels: [...this.thinkingLevels]
         }
         : undefined,
       modelOptions: this.modelOptions.map((modelOption) => ({ ...modelOption })),
@@ -778,16 +783,19 @@ function getModelMeta(state: AgentSessionState): TaurenChatModelMeta {
   const provider = typeof model?.provider === 'string' ? model.provider : '';
   const reasoning = Boolean(model?.reasoning);
   const thinkingLevel = typeof state.thinkingLevel === 'string' ? state.thinkingLevel : '';
+  const thinkingLevels = Array.isArray(state.thinkingLevels)
+    ? state.thinkingLevels.filter((level): level is string => typeof level === 'string')
+    : [];
 
   if (!id) {
-    return { label: '', provider, id, reasoning, thinkingLevel };
+    return { label: '', provider, id, reasoning, thinkingLevel, thinkingLevels };
   }
 
   if (reasoning && thinkingLevel) {
-    return { label: `${id} ${formatThinkingLevel(thinkingLevel)}`, provider, id, reasoning, thinkingLevel };
+    return { label: `${id} ${formatThinkingLevel(thinkingLevel)}`, provider, id, reasoning, thinkingLevel, thinkingLevels };
   }
 
-  return { label: id, provider, id, reasoning, thinkingLevel };
+  return { label: id, provider, id, reasoning, thinkingLevel, thinkingLevels };
 }
 
 function formatModelOptions(models: AgentModel[] | undefined): WebviewModelOption[] {
@@ -921,4 +929,8 @@ function formatThinkingLevel(level: string): string {
   }
 
   return level.slice(0, 1).toUpperCase() + level.slice(1);
+}
+
+function areStringArraysEqual(left: readonly string[], right: readonly string[]): boolean {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
 }

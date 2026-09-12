@@ -46,6 +46,7 @@ suite('Chat webview helpers', () => {
           id: 'gpt-test',
           reasoning: true,
           thinkingLevel: 'high',
+          thinkingLevels: ['off', 'medium', 'high'],
           options: modelOptions
         },
         contextUsage: {
@@ -63,6 +64,7 @@ suite('Chat webview helpers', () => {
         modelId: 'gpt-test',
         modelReasoning: true,
         thinkingLevel: 'high',
+        thinkingLevels: ['off', 'medium', 'high'],
         modelOptions,
         contextUsageLabel: '30%',
         contextUsageTitle: '60,000 / 200,000 context tokens',
@@ -94,6 +96,7 @@ suite('Chat webview helpers', () => {
         modelId: '',
         modelReasoning: false,
         thinkingLevel: '',
+        thinkingLevels: [],
         modelOptions: [],
         contextUsageLabel: '',
         contextUsageTitle: '',

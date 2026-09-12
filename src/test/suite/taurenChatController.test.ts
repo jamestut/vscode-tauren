@@ -415,7 +415,8 @@ suite('TaurenChatController', () => {
           provider: 'anthropic',
           id: 'cached-model',
           reasoning: true,
-          thinkingLevel: 'high'
+          thinkingLevel: 'high',
+          thinkingLevels: ['off', 'minimal', 'low', 'medium', 'high']
         },
         modelOptions: [
           { provider: 'anthropic', id: 'cached-model', name: 'Cached Model', reasoning: true }

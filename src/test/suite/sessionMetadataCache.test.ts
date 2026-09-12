@@ -20,7 +20,8 @@ suite('Session metadata cache', () => {
         provider: 'anthropic',
         id: 'cached',
         reasoning: true,
-        thinkingLevel: 'high'
+        thinkingLevel: 'high',
+        thinkingLevels: []
       }
     });
   });
@@ -34,7 +35,8 @@ suite('Session metadata cache', () => {
         provider: 'openai',
         id: 'live',
         reasoning: true,
-        thinkingLevel: 'medium'
+        thinkingLevel: 'medium',
+        thinkingLevels: ['off', 'low', 'medium', 'high']
       }
     });
 
@@ -44,7 +46,8 @@ suite('Session metadata cache', () => {
         provider: 'openai',
         id: 'live',
         reasoning: true,
-        thinkingLevel: 'medium'
+        thinkingLevel: 'medium',
+        thinkingLevels: ['off', 'low', 'medium', 'high']
       }
     });
     assert.strictEqual(storage.get<unknown>('tauren.cachedModelMeta'), undefined);

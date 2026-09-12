@@ -6,9 +6,11 @@ const thinkingLevelOrder = thinkingLevelOptions.map((option) => option.value);
 
 export function getSteppedThinkingLevel(
   currentLevel: string,
-  direction: ThinkingLevelStepDirection
+  direction: ThinkingLevelStepDirection,
+  availableLevels?: readonly string[]
 ): string | undefined {
-  const currentIndex = thinkingLevelOrder.indexOf(currentLevel as typeof thinkingLevelOrder[number]);
+  const levels = availableLevels && availableLevels.length > 0 ? availableLevels : thinkingLevelOrder;
+  const currentIndex = levels.indexOf(currentLevel);
 
   if (currentIndex === -1) {
     return undefined;
@@ -17,5 +19,9 @@ export function getSteppedThinkingLevel(
   const delta = direction === 'raise' ? 1 : -1;
   const nextIndex = (currentIndex + delta + thinkingLevelOrder.length) % thinkingLevelOrder.length;
 
-  return thinkingLevelOrder[nextIndex];
+  if (nextIndex < 0 || nextIndex >= levels.length) {
+    return undefined;
+  }
+
+  return levels[nextIndex];
 }
