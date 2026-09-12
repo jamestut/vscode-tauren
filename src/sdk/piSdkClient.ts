@@ -501,13 +501,15 @@ export class PiSdkClient implements PiClient {
       throw new Error(`Model not found: ${provider}/${modelId}`);
     }
 
-    await session.setModel(model);
+    await session.setModel(model, { persist: true });
+    await this.flushSettings();
     return model;
   }
 
   public async setThinkingLevel(level: string): Promise<void> {
     const { session } = await this.ensureRuntime();
-    session.setThinkingLevel(level as Parameters<typeof session.setThinkingLevel>[0]);
+    session.setThinkingLevel(level as Parameters<typeof session.setThinkingLevel>[0], { persist: true });
+    await this.flushSettings();
   }
 
   public async updateRuntimeSetting(settingId: PiSettingId, value: SettingValue): Promise<{ applied: 'live' | 'reload'; message?: string }> {
