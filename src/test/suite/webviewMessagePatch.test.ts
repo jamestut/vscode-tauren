@@ -128,6 +128,7 @@ function createState(overrides: Partial<WebviewStateMessage>): WebviewStateMessa
     modelId: '',
     modelReasoning: false,
     thinkingLevel: '',
+    thinkingLevels: [],
     modelOptions: [],
     contextUsageLabel: '',
     contextUsageTitle: '',

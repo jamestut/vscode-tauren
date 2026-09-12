@@ -286,7 +286,7 @@ export class LocalSlashCommandController {
       provider: current.provider,
       id: current.id,
       reasoning: current.reasoning
-    }, level);
+    }, level, current.thinkingLevels);
     this.options.postState();
   }
 

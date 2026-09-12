@@ -1,4 +1,5 @@
 import { getScopedModelPickerOptions } from '../scopedModels';
+import { thinkingLevelOptions } from '../../settings/settingsRegistry';
 import type { ModelOption, WebviewState } from '../types';
 import { createTooltipElement } from './tooltip';
 
@@ -18,6 +19,7 @@ export type ModelPickerControllerOptions = {
 
 export class ModelPickerController {
   private modelSelectOptionsSignature = '';
+  private thinkingSelectOptionsSignature = '';
 
   public constructor(private readonly options: ModelPickerControllerOptions) {}
 
@@ -196,12 +198,35 @@ export class ModelPickerController {
 
   private syncThinkingSelect(): void {
     const state = this.options.getState();
-    this.options.thinkingSelectElement.value = state.thinkingLevel || 'medium';
+    const levels = state.thinkingLevels.length > 0
+      ? state.thinkingLevels
+      : thinkingLevelOptions.map((option) => option.value);
+    const nextSignature = levels.join('\u0000');
+
+    if (nextSignature !== this.thinkingSelectOptionsSignature) {
+      this.thinkingSelectOptionsSignature = nextSignature;
+      this.options.thinkingSelectElement.replaceChildren();
+
+      for (const level of levels) {
+        const option = document.createElement('option');
+        option.value = level;
+        option.textContent = getThinkingLevelLabel(level);
+        this.options.thinkingSelectElement.append(option);
+      }
+    }
+
+    const selected = state.thinkingLevel || 'medium';
+    this.options.thinkingSelectElement.value = levels.includes(selected) ? selected : levels[0] ?? '';
     this.options.thinkingSelectElement.disabled = state.busy || !state.modelReasoning;
     this.options.thinkingSelectElement.title = state.modelReasoning
       ? 'Thinking mode'
       : 'The selected model does not advertise thinking support.';
   }
+}
+
+function getThinkingLevelLabel(level: string): string {
+  return thinkingLevelOptions.find((option) => option.value === level)?.label
+    ?? level.slice(0, 1).toUpperCase() + level.slice(1);
 }
 
 function getModelOptionsSignature(modelOptions: readonly ModelOption[]): string {

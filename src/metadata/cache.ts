@@ -76,8 +76,17 @@ function parseCachedModelMeta(value: unknown): TaurenChatModelMeta | undefined {
     provider: getRecordString(value, 'provider') ?? '',
     id,
     reasoning: value.reasoning === true,
-    thinkingLevel: getRecordString(value, 'thinkingLevel') ?? ''
+    thinkingLevel: getRecordString(value, 'thinkingLevel') ?? '',
+    thinkingLevels: parseCachedThinkingLevels(value.thinkingLevels)
   };
+}
+
+function parseCachedThinkingLevels(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter((level): level is string => typeof level === 'string');
 }
 
 function parseCachedModelOptions(value: unknown): TaurenChatSessionMetaSnapshot['modelOptions'] | undefined {

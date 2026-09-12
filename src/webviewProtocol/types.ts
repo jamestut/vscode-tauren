@@ -335,6 +335,7 @@ export type WebviewStateMessageBase = Omit<ChatState, 'messages'> & {
   modelId: string;
   modelReasoning: boolean;
   thinkingLevel: string;
+  thinkingLevels: string[];
   modelOptions: WebviewModelOption[];
   contextUsageLabel: string;
   contextUsageTitle: string;
@@ -404,6 +405,7 @@ export type CreateWebviewStateMessageOptions = {
     id?: string;
     reasoning?: boolean;
     thinkingLevel?: string;
+    thinkingLevels?: string[];
     options?: WebviewModelOption[];
   };
   contextUsage?: {

@@ -15,7 +15,8 @@ suite('SessionMetadataState', () => {
           provider: 'anthropic',
           id: 'cached',
           reasoning: true,
-          thinkingLevel: 'high'
+          thinkingLevel: 'high',
+          thinkingLevels: ['off', 'minimal', 'low', 'medium', 'high']
         },
         modelOptions: [
           { provider: 'anthropic', id: 'cached', name: 'Cached', reasoning: true }
@@ -30,6 +31,7 @@ suite('SessionMetadataState', () => {
       id: 'cached',
       reasoning: true,
       thinkingLevel: 'high',
+      thinkingLevels: ['off', 'minimal', 'low', 'medium', 'high'],
       options: [{ provider: 'anthropic', id: 'cached', name: 'Cached', reasoning: true }]
     });
     assert.deepStrictEqual(state.getWebviewState().contextUsage, {
@@ -58,7 +60,8 @@ suite('SessionMetadataState', () => {
           provider: 'openai',
           id: 'gpt',
           reasoning: true,
-          thinkingLevel: 'medium'
+          thinkingLevel: 'medium',
+          thinkingLevels: []
         },
         modelOptions: [],
         contextUsage: undefined
@@ -69,7 +72,8 @@ suite('SessionMetadataState', () => {
           provider: 'openai',
           id: 'gpt',
           reasoning: true,
-          thinkingLevel: 'medium'
+          thinkingLevel: 'medium',
+          thinkingLevels: []
         },
         modelOptions: [{ provider: 'openai', id: 'gpt', name: 'GPT', reasoning: true }],
         contextUsage: undefined

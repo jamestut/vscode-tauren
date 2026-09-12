@@ -409,6 +409,7 @@ export function createWebviewStateMessage({
     modelId: model.id ?? '',
     modelReasoning: model.reasoning ?? false,
     thinkingLevel: model.thinkingLevel ?? '',
+    thinkingLevels: model.thinkingLevels ?? [],
     modelOptions: model.options ?? [],
     contextUsageLabel: contextUsage.label ?? '',
     contextUsageTitle: contextUsage.title ?? '',
@@ -693,14 +694,7 @@ ${createInitialEmptyStateHtml(Boolean(options.welcomeDismissed), Boolean(options
       <div class="composer__model-menu" role="menu">
         <div class="composer__field">
           <label for="thinking-select">Thinking</label>
-          <select id="thinking-select" class="composer__select composer__thinking-select" aria-label="Thinking mode">
-            <option value="off">Off</option>
-            <option value="minimal">Minimal</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="xhigh">X High</option>
-          </select>
+          <select id="thinking-select" class="composer__select composer__thinking-select" aria-label="Thinking mode"></select>
         </div>
         <div class="composer__field">
           <label for="model-select">Model</label>

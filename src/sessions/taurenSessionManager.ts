@@ -1423,6 +1423,7 @@ function createEmptyState(): WebviewStateMessage {
     modelId: '',
     modelReasoning: false,
     thinkingLevel: '',
+    thinkingLevels: [],
     modelOptions: [],
     contextUsageLabel: '',
     contextUsageTitle: '',
