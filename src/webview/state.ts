@@ -21,6 +21,7 @@ export const initialWebviewState: WebviewState = {
   modelId: '',
   modelReasoning: false,
   thinkingLevel: '',
+  thinkingLevels: [],
   modelOptions: [],
   contextUsageLabel: '',
   contextUsageTitle: '',
@@ -204,6 +205,9 @@ export function parseWebviewStateMessage(data: unknown, previousState?: WebviewS
     modelId: typeof record.modelId === 'string' ? record.modelId : '',
     modelReasoning: Boolean(record.modelReasoning),
     thinkingLevel: typeof record.thinkingLevel === 'string' ? record.thinkingLevel : '',
+    thinkingLevels: Array.isArray(record.thinkingLevels)
+      ? record.thinkingLevels.filter((level): level is string => typeof level === 'string')
+      : [],
     modelOptions: Array.isArray(record.modelOptions) ? record.modelOptions : [],
     contextUsageLabel: typeof record.contextUsageLabel === 'string' ? record.contextUsageLabel : '',
     contextUsageTitle: typeof record.contextUsageTitle === 'string' ? record.contextUsageTitle : '',

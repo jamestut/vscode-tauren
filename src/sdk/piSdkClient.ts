@@ -172,6 +172,7 @@ export class PiSdkClient implements PiClient {
     const state: PiSessionState = {
       model: session.model,
       thinkingLevel: session.thinkingLevel,
+      thinkingLevels: session.getAvailableThinkingLevels(),
       isStreaming: session.isStreaming,
       isCompacting: session.isCompacting,
       steeringMode: session.steeringMode,

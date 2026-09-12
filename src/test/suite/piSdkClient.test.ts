@@ -871,6 +871,7 @@ class FakeSession {
   public model = { provider: 'openai', id: 'gpt-test', name: 'GPT Test', reasoning: true };
   public selectedModel: unknown;
   public thinkingLevel = 'medium';
+  public thinkingLevels = ['off', 'minimal', 'low', 'medium', 'high'];
   public isStreaming = false;
   public isCompacting = false;
   public steeringMode = 'all';
@@ -1022,6 +1023,10 @@ class FakeSession {
 
   public setThinkingLevel(level: string): void {
     this.thinkingLevel = level;
+  }
+
+  public getAvailableThinkingLevels(): string[] {
+    return this.thinkingLevels;
   }
 
   public setAutoCompactionEnabled(enabled: boolean): void {

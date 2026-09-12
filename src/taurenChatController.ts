@@ -538,7 +538,7 @@ export class TaurenChatController {
         return;
       }
 
-      const nextLevel = getSteppedThinkingLevel(state.thinkingLevel ?? '', direction);
+      const nextLevel = getSteppedThinkingLevel(state.thinkingLevel ?? '', direction, state.thinkingLevels);
 
       if (!nextLevel) {
         return;
