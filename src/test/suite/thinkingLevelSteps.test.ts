@@ -20,9 +20,9 @@ suite('thinkingLevelSteps', () => {
     assert.strictEqual(getSteppedThinkingLevel('minimal', 'lower'), 'off');
   });
 
-  test('returns no change at bounds and ignores unknown levels', () => {
-    assert.strictEqual(getSteppedThinkingLevel('max', 'raise'), undefined);
-    assert.strictEqual(getSteppedThinkingLevel('off', 'lower'), undefined);
+  test('wraps at the ends and ignores unknown levels', () => {
+    assert.strictEqual(getSteppedThinkingLevel('max', 'raise'), 'off');
+    assert.strictEqual(getSteppedThinkingLevel('off', 'lower'), 'max');
     assert.strictEqual(getSteppedThinkingLevel('', 'raise'), undefined);
   });
 });
