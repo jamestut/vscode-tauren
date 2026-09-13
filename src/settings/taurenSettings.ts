@@ -29,6 +29,10 @@ export function getAnimationsEnabledSetting(): boolean {
   return vscode.workspace.getConfiguration('tauren').get<boolean>('animationsEnabled', true);
 }
 
+export function getCollapseToolResultsSetting(): boolean {
+  return vscode.workspace.getConfiguration('tauren').get<boolean>('collapseToolResults', true);
+}
+
 export function getShowWelcomeSetting(globalState?: vscode.Memento): boolean {
   if (hasConfiguredShowWelcomeSetting()) {
     return vscode.workspace.getConfiguration('tauren').get<boolean>('showWelcome', true);
@@ -194,6 +198,7 @@ export function getTaurenSettingValues(globalState?: vscode.Memento): Partial<Re
     'tauren.kward.path': getKwardPathSetting() ?? '',
     'tauren.outputColors': getOutputColorsSetting(),
     'tauren.animationsEnabled': getAnimationsEnabledSetting(),
+    'tauren.collapseToolResults': getCollapseToolResultsSetting(),
     'tauren.showWelcome': getShowWelcomeSetting(globalState),
     'tauren.useTaurenShareViewer': getUseTaurenShareViewerSetting(),
     'tauren.customUiTheme': getCustomUiThemeSetting(),

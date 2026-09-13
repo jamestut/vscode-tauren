@@ -33,6 +33,7 @@ type RenderedMessageView = {
   allowRemoteImages: boolean;
   outputColors: boolean;
   animationsEnabled: boolean;
+  collapseToolResults: boolean;
   copyable: boolean;
   hasBody: boolean;
 };
@@ -460,7 +461,8 @@ export class MessageListController {
       && existingView.showRole === showRole
       && existingView.allowRemoteImages === state.allowRemoteImages
       && existingView.outputColors === state.outputColors
-      && existingView.animationsEnabled === state.animationsEnabled) {
+      && existingView.animationsEnabled === state.animationsEnabled
+      && existingView.collapseToolResults === state.collapseToolResults) {
       return existingView;
     }
 
@@ -472,6 +474,7 @@ export class MessageListController {
       const renderOptions = {
         outputColors: state.outputColors,
         animationsEnabled: state.animationsEnabled,
+        collapseToolResults: state.collapseToolResults,
         allowRemoteImages: state.allowRemoteImages
       };
 
@@ -493,6 +496,7 @@ export class MessageListController {
       existingView.allowRemoteImages = state.allowRemoteImages;
       existingView.outputColors = state.outputColors;
       existingView.animationsEnabled = state.animationsEnabled;
+      existingView.collapseToolResults = state.collapseToolResults;
       existingView.copyable = copyable;
       existingView.hasBody = hasBody;
       return existingView;
@@ -506,6 +510,7 @@ export class MessageListController {
         {
           outputColors: state.outputColors,
           animationsEnabled: state.animationsEnabled,
+          collapseToolResults: state.collapseToolResults,
           allowRemoteImages: state.allowRemoteImages
         }
       ),
@@ -516,6 +521,7 @@ export class MessageListController {
       allowRemoteImages: state.allowRemoteImages,
       outputColors: state.outputColors,
       animationsEnabled: state.animationsEnabled,
+      collapseToolResults: state.collapseToolResults,
       copyable,
       hasBody
     };
@@ -547,7 +553,7 @@ export class MessageListController {
         state.messages[index],
         showRole,
         index,
-        { outputColors: state.outputColors, animationsEnabled: state.animationsEnabled, allowRemoteImages: state.allowRemoteImages }
+        { outputColors: state.outputColors, animationsEnabled: state.animationsEnabled, collapseToolResults: state.collapseToolResults, allowRemoteImages: state.allowRemoteImages }
       ),
       message: state.messages[index],
       bodyText: state.messages[index].text || '',
@@ -556,6 +562,7 @@ export class MessageListController {
       allowRemoteImages: state.allowRemoteImages,
       outputColors: state.outputColors,
       animationsEnabled: state.animationsEnabled,
+      collapseToolResults: state.collapseToolResults,
       copyable: canCopyAssistantMessage(state.messages[index]),
       hasBody: shouldRenderMessageBody(state.messages[index])
     };

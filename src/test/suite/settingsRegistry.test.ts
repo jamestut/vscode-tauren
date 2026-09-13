@@ -7,7 +7,7 @@ suite('Settings registry', () => {
   test('keeps Tauren and Pi settings in requested product sections', () => {
     assert.deepStrictEqual(
       getSettingsForSection('appearance').map((setting) => setting.id),
-      ['tauren.outputColors', 'tauren.animationsEnabled', 'tauren.showWelcome', 'tauren.useTaurenShareViewer', 'tauren.customUiTheme']
+      ['tauren.outputColors', 'tauren.animationsEnabled', 'tauren.collapseToolResults', 'tauren.showWelcome', 'tauren.useTaurenShareViewer', 'tauren.customUiTheme']
     );
     assert.deepStrictEqual(
       getSettingsForSection('extensions').map((setting) => setting.id),

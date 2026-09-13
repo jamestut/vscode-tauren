@@ -1221,6 +1221,7 @@ export class TaurenSessionManager {
       extensionWidgets: this.filterEnabledExtensionWidgets(active.extensionWidgetHost.getEntries()),
       outputColors: this.options.getOutputColors?.() ?? true,
       animationsEnabled: this.options.getAnimationsEnabled?.() ?? true,
+      collapseToolResults: this.options.getCollapseToolResults?.() ?? true,
       customUiTheme: this.options.getCustomUiTheme?.() ?? 'default'
     });
   }
@@ -1436,6 +1437,7 @@ function createEmptyState(): WebviewStateMessage {
     extensionWidgets: [],
     outputColors: true,
     animationsEnabled: true,
+    collapseToolResults: true,
     customUiTheme: 'default',
     promptContext: [],
     promptImages: [],

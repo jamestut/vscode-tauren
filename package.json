@@ -485,6 +485,11 @@
           "default": true,
           "description": "Enable animations in the Tauren sidebar. Reduced-motion preferences still disable motion."
         },
+        "tauren.collapseToolResults": {
+          "type": "boolean",
+          "default": true,
+          "description": "Collapse completed tool calls and activity output in the transcript by default. Running calls stay expanded until they finish."
+        },
         "tauren.showWelcome": {
           "type": "boolean",
           "default": true,

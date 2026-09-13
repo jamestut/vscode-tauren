@@ -5,6 +5,7 @@ export type TaurenSettingId =
   | 'tauren.kward.path'
   | 'tauren.outputColors'
   | 'tauren.animationsEnabled'
+  | 'tauren.collapseToolResults'
   | 'tauren.showWelcome'
   | 'tauren.useTaurenShareViewer'
   | 'tauren.customUiTheme'
@@ -272,6 +273,17 @@ export const settingDefinitions = [
     control: 'toggle',
     defaultValue: true,
     helper: 'Reduced-motion preferences still disable motion.',
+    liveBehavior: 'immediate'
+  },
+  {
+    id: 'tauren.collapseToolResults',
+    owner: 'tauren',
+    section: 'appearance',
+    label: 'Collapse tool results',
+    description: 'Collapse completed tool calls and activity output in the transcript by default.',
+    control: 'toggle',
+    defaultValue: true,
+    helper: 'Running calls stay expanded until they finish; expanding a result keeps it open.',
     liveBehavior: 'immediate'
   },
   {

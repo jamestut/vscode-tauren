@@ -346,6 +346,7 @@ export type WebviewStateMessageBase = Omit<ChatState, 'messages'> & {
   slashCommandsRefreshing: boolean;
   outputColors: boolean;
   animationsEnabled: boolean;
+  collapseToolResults: boolean;
   customUiTheme: WebviewCustomUiTheme;
   extensionStatus: WebviewExtensionStatusEntry[];
   extensionFooter?: WebviewExtensionFooterEntry;
@@ -419,6 +420,7 @@ export type CreateWebviewStateMessageOptions = {
   slashCommandsRefreshing?: boolean;
   outputColors?: boolean;
   animationsEnabled?: boolean;
+  collapseToolResults?: boolean;
   customUiTheme?: WebviewCustomUiTheme;
   extensionStatus?: WebviewExtensionStatusEntry[];
   extensionFooter?: WebviewExtensionFooterEntry;
