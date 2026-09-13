@@ -102,6 +102,7 @@ export type WebviewState = {
   slashCommandsRefreshing: boolean;
   outputColors: boolean;
   animationsEnabled: boolean;
+  collapseToolResults: boolean;
   customUiTheme: CustomUiTheme;
   extensionStatus: ExtensionStatusEntry[];
   extensionFooter?: ExtensionFooterEntry;

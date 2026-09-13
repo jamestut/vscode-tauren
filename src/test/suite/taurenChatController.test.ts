@@ -1117,6 +1117,7 @@ suite('TaurenChatController', () => {
       slashCommandsRefreshing: false,
       outputColors: true,
       animationsEnabled: true,
+      collapseToolResults: true,
       customUiTheme: 'default',
       extensionStatus: [],
       extensionWidgets: [],

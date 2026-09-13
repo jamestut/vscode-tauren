@@ -138,6 +138,7 @@ function createState(overrides: Partial<WebviewStateMessage>): WebviewStateMessa
     slashCommandsRefreshing: false,
     outputColors: true,
     animationsEnabled: true,
+    collapseToolResults: true,
     customUiTheme: 'default',
     extensionStatus: [],
     extensionWidgets: [],

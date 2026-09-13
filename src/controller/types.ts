@@ -28,6 +28,7 @@ export type TaurenChatControllerOptions = {
   getCwd?: () => string | undefined;
   getOutputColors?: () => boolean;
   getAnimationsEnabled?: () => boolean;
+  getCollapseToolResults?: () => boolean;
   getCustomUiTheme?: () => WebviewCustomUiTheme;
   getReadyScript?: () => string | undefined;
   getReadyScriptEnabled?: () => boolean;

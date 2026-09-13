@@ -35,6 +35,7 @@ export function pruneActivityRenderState(activeActivityIds: Set<string>): void {
 
 export type MessageRenderOptions = RenderMarkdownOptions & {
   outputColors?: boolean;
+  collapseToolResults?: boolean;
 };
 
 export function createMessageElement(
@@ -451,6 +452,7 @@ function getActivityRenderSignature(activity: Activity, messageIndex: number | u
     isActivityBodyExpanded(activity, getActivityRenderId(activity)) ? 'expanded' : 'collapsed',
     options.outputColors !== false ? 'colors' : 'plain',
     options.animationsEnabled !== false ? 'animated' : 'static',
+    options.collapseToolResults !== false ? 'collapsed' : 'expanded',
     options.allowRemoteImages === true ? 'remote' : 'local',
     getImagesSignature(activity.images)
   ].join('\u0000');
@@ -490,7 +492,7 @@ function createActivityElement(activity: Activity, messageIndex: number | undefi
   const savedOpenState = activityExpansion.get(activityId);
   details.open = typeof savedOpenState === 'boolean'
     ? savedOpenState
-    : activity.status === 'running';
+    : activity.status === 'running' || (options.collapseToolResults === false && shouldKeepActivityOpen(activity));
 
   // Setting `open` programmatically fires a toggle event. Ignore that initial toggle so a
   // running activity's transient expanded state is not stored as a user preference; otherwise
@@ -832,6 +834,11 @@ function createActivityBodyToggle({
   }
 
   return button;
+}
+
+function shouldKeepActivityOpen(activity: Activity): boolean {
+  return (typeof activity.body === 'string' && activity.body.length > 0)
+    || getRenderableImages(activity.images).length > 0;
 }
 
 function roleLabel(message: ChatMessage): string {
