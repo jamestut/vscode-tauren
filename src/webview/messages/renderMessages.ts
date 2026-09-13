@@ -490,9 +490,23 @@ function createActivityElement(activity: Activity, messageIndex: number | undefi
   const savedOpenState = activityExpansion.get(activityId);
   details.open = typeof savedOpenState === 'boolean'
     ? savedOpenState
-    : activity.status === 'running' || shouldKeepActivityOpen(activity);
+    : activity.status === 'running';
+
+  // Setting `open` programmatically fires a toggle event. Ignore that initial toggle so a
+  // running activity's transient expanded state is not stored as a user preference; otherwise
+  // the completed activity would keep the saved `true` and never collapse.
+  let pendingInitialToggle: boolean | undefined = details.open ? true : undefined;
 
   details.addEventListener('toggle', () => {
+    // Consume the pending programmatic toggle once; clear it either way so a real user
+    // toggle (which won't match, or arrives after `open` was already false) is always saved.
+    if (pendingInitialToggle !== undefined && details.open === pendingInitialToggle) {
+      pendingInitialToggle = undefined;
+      return;
+    }
+
+    pendingInitialToggle = undefined;
+
     if (activityId) {
       activityExpansion.set(activityId, details.open);
     }
@@ -818,11 +832,6 @@ function createActivityBodyToggle({
   }
 
   return button;
-}
-
-function shouldKeepActivityOpen(activity: Activity): boolean {
-  return (typeof activity.body === 'string' && activity.body.length > 0)
-    || getRenderableImages(activity.images).length > 0;
 }
 
 function roleLabel(message: ChatMessage): string {
