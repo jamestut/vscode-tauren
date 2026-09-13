@@ -18,6 +18,7 @@ export type TaurenSettingId =
   | 'tauren.restrictFileReferencesToWorkspace'
   | 'tauren.rejectEditWriteOutsideWorkspace'
   | 'tauren.debugPerformance'
+  | 'tauren.transcriptRenderLimit'
   | 'tauren.readyScript'
   | 'tauren.readyScriptEnabled'
   | 'tauren.voice.enabled'
@@ -622,6 +623,18 @@ export const settingDefinitions = [
     description: 'Collect Tauren performance diagnostics in the output channel and diagnostics view.',
     control: 'toggle',
     defaultValue: false,
+    liveBehavior: 'immediate',
+    subtle: true
+  },
+  {
+    id: 'tauren.transcriptRenderLimit',
+    owner: 'tauren',
+    section: 'advanced',
+    label: 'Transcript render limit',
+    description: 'Maximum number of transcript entries Tauren renders before folding older entries into a single note.',
+    control: 'text',
+    defaultValue: '100',
+    helper: 'Set to 0 to render the full transcript. Recent entries are always kept visible.',
     liveBehavior: 'immediate',
     subtle: true
   },

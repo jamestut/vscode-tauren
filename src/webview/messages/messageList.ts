@@ -18,9 +18,8 @@ import type { Activity, ChatImage, ChatMessage, StartupResourceSection, WebviewS
 
 type PostMessage = (message: unknown) => void;
 
-const largeTranscriptCollapseThreshold = 250;
-const largeTranscriptHeadCount = 20;
-const largeTranscriptTailCount = 180;
+const maxLargeTranscriptHeadCount = 20;
+const defaultTranscriptRenderLimit = 100;
 const streamingBodyRenderIntervalMs = 33;
 
 type MessageRenderPlanItem = { kind: 'message'; index: number } | { kind: 'collapse'; count: number };
@@ -81,7 +80,7 @@ export class MessageListController {
       this.options.messagesContentElement.replaceChildren();
     }
 
-    const renderPlan = getMessageRenderPlan(state.messages.length);
+    const renderPlan = getMessageRenderPlan(state.messages.length, resolveTranscriptRenderLimit(state));
     const renderedIndexes = new Set<number>();
     const nodes: Node[] = [];
     let previousMessageRole: string | undefined;
@@ -391,11 +390,13 @@ export class MessageListController {
   }
 
   public getRenderedMessageCount(): number {
-    return getMessageRenderPlan(this.options.getState().messages.length).filter((item) => item.kind === 'message').length;
+    const state = this.options.getState();
+    return getMessageRenderPlan(state.messages.length, resolveTranscriptRenderLimit(state)).filter((item) => item.kind === 'message').length;
   }
 
   public getCollapsedMessageCount(): number {
-    return getMessageRenderPlan(this.options.getState().messages.length).reduce((count, item) => item.kind === 'collapse' ? count + item.count : count, 0);
+    const state = this.options.getState();
+    return getMessageRenderPlan(state.messages.length, resolveTranscriptRenderLimit(state)).reduce((count, item) => item.kind === 'collapse' ? count + item.count : count, 0);
   }
 
   private syncMessageNodes(nodes: Node[]): void {
@@ -836,13 +837,28 @@ function hasRenderableImages(images: ChatImage[] | undefined): boolean {
   });
 }
 
-function getMessageRenderPlan(messageCount: number): MessageRenderPlanItem[] {
-  if (messageCount <= largeTranscriptCollapseThreshold) {
+function resolveTranscriptRenderLimit(state: WebviewState): number {
+  const raw = state.settings.values['tauren.transcriptRenderLimit'];
+  const parsed = typeof raw === 'string' ? Number.parseInt(raw, 10) : Number.NaN;
+
+  if (!Number.isFinite(parsed)) {
+    return defaultTranscriptRenderLimit;
+  }
+
+  if (parsed <= 0) {
+    return 0;
+  }
+
+  return parsed;
+}
+
+function getMessageRenderPlan(messageCount: number, renderLimit: number): MessageRenderPlanItem[] {
+  if (renderLimit <= 0 || messageCount <= renderLimit) {
     return Array.from({ length: messageCount }, (_, index) => ({ kind: 'message', index }));
   }
 
-  const headCount = Math.min(largeTranscriptHeadCount, messageCount);
-  const tailStart = Math.max(headCount, messageCount - largeTranscriptTailCount);
+  const headCount = Math.min(maxLargeTranscriptHeadCount, Math.floor(renderLimit / 2));
+  const tailStart = Math.max(headCount, messageCount - (renderLimit - headCount));
   const collapsedCount = Math.max(0, tailStart - headCount);
   const plan: MessageRenderPlanItem[] = [];
 
