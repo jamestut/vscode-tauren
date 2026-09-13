@@ -505,6 +505,11 @@
           "default": false,
           "description": "Collect Tauren performance diagnostics in the output channel and diagnostics view."
         },
+        "tauren.transcriptRenderLimit": {
+          "type": "string",
+          "default": "100",
+          "description": "Maximum number of transcript entries Tauren renders before folding older entries into a single note. Set to 0 to render the full transcript."
+        },
         "tauren.voice.enabled": {
           "type": "boolean",
           "default": false,

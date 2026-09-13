@@ -145,6 +145,21 @@ export function getDebugPerformanceSetting(): boolean {
   return vscode.workspace.getConfiguration('tauren').get<boolean>('debugPerformance', false);
 }
 
+export function getTranscriptRenderLimitSetting(): number {
+  const value = vscode.workspace.getConfiguration('tauren').get<string>('transcriptRenderLimit', '100');
+  const parsed = Number.parseInt(value, 10);
+
+  if (!Number.isFinite(parsed)) {
+    return 100;
+  }
+
+  if (parsed <= 0) {
+    return 0;
+  }
+
+  return parsed;
+}
+
 export function affectsAnyTaurenSetting(event: vscode.ConfigurationChangeEvent): boolean {
   return taurenSettingIds.some((id) => event.affectsConfiguration(id));
 }
@@ -192,6 +207,7 @@ export function getTaurenSettingValues(globalState?: vscode.Memento): Partial<Re
     'tauren.restrictFileReferencesToWorkspace': getRestrictFileReferencesToWorkspaceSetting(),
     'tauren.rejectEditWriteOutsideWorkspace': getRejectEditWriteOutsideWorkspaceSetting(),
     'tauren.debugPerformance': getDebugPerformanceSetting(),
+    'tauren.transcriptRenderLimit': String(getTranscriptRenderLimitSetting()),
     'tauren.readyScript': getReadyScriptSetting() ?? '',
     'tauren.readyScriptEnabled': getReadyScriptEnabledSetting(),
     'tauren.voice.enabled': getVoiceEnabledSetting(),
